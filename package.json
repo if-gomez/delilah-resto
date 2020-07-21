@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "db:setup": "node src/db/0-setup.js",
-    "db:seed": "cross-env SEED-1 node src/db/0-setup.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
