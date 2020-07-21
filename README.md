@@ -9,7 +9,7 @@ Dentro del archivo SQL se encuentra la estructura de la base de datos, con un us
 
 Pasos para iniciar el proyecto:
 
-1) Crear base de datos local que se llame 'delilah_resto'.
+1) Crear base de datos local con el nombre 'delilah_resto'.
 2) Importar el archivo SQL 'delilah_resto.sql'
 
 #### Servidor
