@@ -1,0 +1,596 @@
+openapi: 3.0.0
+info:
+  title: Delilah Resto
+  description: API para administrar Delilah Resto
+  contact:
+    name: Ivan Gomez
+    url: https://github.com/if-gomez
+    email: ivangomez1902@gmail.com
+  version: 1.0.0
+
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ivangomez/DelilahResto/1.0.0
+  - description: Localhost
+    url: http://localhost:4000
+    
+
+paths:
+  /products:
+    get:
+      tags:
+        - users
+        - admin
+      summary: Return a list of products
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Create a new product
+      responses:
+        '201':
+          description: Product created
+        '403':
+          description: Not authorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items: 
+                $ref: '#/components/schemas/Product'
+        description: Product created
+        required: true
+        
+  /products/{id}:
+    get:
+      tags:
+        - users
+        - admin
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Succesfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+    put:
+      tags:
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Update product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number      
+      responses:
+        '200':
+          description: Product updated
+        '403':
+          description: Not authorized
+        '404':
+          description: Product not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  name:
+                    type: string
+                    example: Hamburguesa
+                  description:
+                    type: string
+                    example: Deliciosa hamburguesa completa
+                  image:
+                    type: string
+                    example: http://imagen.com
+                  stock:
+                    type: number
+                    example: 10
+                  favourite:
+                    type: boolean
+                    example: 1
+                  price:
+                    type: number
+                    example: 230
+        description: Updated product
+        required: true
+
+    delete:
+      tags:
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Delete a product
+      parameters:
+        - name: id
+          in: path
+          description: Product name to delete
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Product deleted
+        '403':
+          description: Not authorized
+        '404':
+          description: Product not found
+
+  /orders:
+    get:
+      tags: 
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Return a list of orders
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '403':
+          description: Not authorized
+
+    post:
+      tags: 
+        - users
+      security: 
+        - bearerAuth: []
+      summary: New order
+      responses:
+        '201':
+          description: Order created
+        '403':
+          description: Not authorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  products: 
+                    type: number
+                    example: 1,1
+                  payment:
+                    type: string
+                    example: Efectivo
+        required: true    
+          
+  /orders/{id}:
+    get:
+        tags: 
+          - admin
+        security: 
+          - bearerAuth: []
+        summary: Return an order
+        parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: Successfull operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Order'
+          '403':
+            description: Not authorized
+          '404':
+            description: Order not found
+
+    delete:
+      tags:
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Delete an order
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order deleted
+        '403':
+          description: Not authorized
+        '404':
+          description: Order not found
+            
+  /orders/status/{id}:
+    patch:
+      tags:
+        - admin
+      summary: Modify order status
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Succesfull operation
+        '403':
+          description: Not authorized
+        '404':
+          description: Order not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  status:
+                    type: string
+                    example: Confirmado
+            
+  /users:
+    get:
+      tags: 
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Return a list of users
+      responses:
+        '200':
+          description: Users list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Not authorized
+          
+    post:
+      tags:
+        - admin
+        - users
+      summary: Create new user
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Info is missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  email:
+                    type: string
+                    example: ivangomez1902@gmail.com
+                  password:
+                    type: string
+                    example: ivan123
+                  fullName:
+                    type: string
+                    example: Ivan Gomez
+                  address:
+                    type: string
+                    example: Nother 1169
+                  phone:
+                    type: number
+                    example: 4291158
+        description: User created
+        required: true
+  
+  /users/{id}:
+    get:
+      tags:
+        - users
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Get user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: Not authorized
+        '404':
+          description: User not found
+    put:
+      tags:
+        - admin
+        - users
+      security: 
+        - bearerAuth: []
+      summary: Update user info
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: User info updated
+        '403':
+          description: Not authorized
+        '404':
+          description: User not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  email: 
+                    type: string
+                    example: ivangomez1902@gmail.com
+                  password: 
+                    type: string
+                    example: ivan123
+                  fullName: 
+                    type: string
+                    example: Ivan Gomez
+                  phone: 
+                    type: number
+                    example: 4291158
+                  address: 
+                    type: string
+                    example: Nother 1169
+        description: User updated
+        required: true
+        
+    delete:
+      tags:
+        - admin
+      security: 
+        - bearerAuth: []
+      summary: Delete user
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: User deleted
+        '403':
+          description: Not authorized
+        '404':
+          description: User not found
+          
+  /users/login:
+    post:
+      tags:
+        - users
+        - admin
+      summary: Log in
+      responses:
+        '200':
+          description: Successfull operation
+        '400':
+          description: User or password invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  email:
+                    type: string
+                    example: ivangomez1902@gmail.com
+                  password:
+                    type: string
+                    example: ivan123
+                    
+  /users/admin/{id}:
+    patch:
+      tags:
+        - admin
+      summary: Maker user admin
+      security: 
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successfull operation
+        '403':
+          description: Not Authorized
+        '404':
+          description: User not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  admin:
+                    type: boolean
+                    example: 1
+  
+  /users/pass/{id}:
+    patch:
+      tags:
+        - users
+      summary: Modify user password
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Succesfull operation
+        '403':
+          description: Not authorized
+        '404':
+          description: User not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                properties:
+                  email:
+                    type: string
+                    example: ivangomez1902@gmail.com
+                  password:
+                    type: string
+                    example: ivan123
+                  newPassword:
+                    type: string
+                    example: ivan1234
+    
+    
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        status:
+          type: string
+          example: En preparacion
+        products:
+          type: string
+          example: 'Hamburguesa x2'
+        total:
+          type: integer
+          example: 240
+        payment:
+          type: string
+          example: Debito
+        fullName:
+          type: string
+          description: User fullname
+          example: Ivan Gomez
+        address:
+          type: string
+          description: User address
+          example: Nother 1169
+        phone:
+          type: number
+          description: User phone
+          example: 42992899
+          
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        fullName:
+          type: string
+          example: Ivan Gomez
+        email:
+          type: string
+          example: ivangomez1902@gmail.com
+        password:
+          type: string
+          example: ivan123
+        phone:
+          type: number
+          example: 42992899
+        address:
+          type: string
+          example: Nother 1169
+        active:
+          type: boolean
+          example: true
+        admin:
+          type: boolean
+          example: true
+        dateCreated:
+          type: string
+          example: '2020-07-12 18:25:08'
+          
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Hamburguesa
+        description:
+          type: string
+          example: Deliciosa hamburguesa completa
+        image:
+          type: string
+          example: https://imagen.com
+        stock:
+          type: integer
+          example: 10
+        favourite:
+          type: boolean
+          example: 0
+        price:
+          type: number
+          example: 120
+        dateCreated:
+          type: string
+          example: '2020-07-12 18:25:08'

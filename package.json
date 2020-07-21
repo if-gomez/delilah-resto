@@ -1,0 +1,26 @@
+{
+  "name": "delilah-resto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "db:setup": "node src/db/0-setup.js",
+    "db:seed": "cross-env SEED-1 node src/db/0-setup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.2.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
+}
