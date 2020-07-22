@@ -35,7 +35,7 @@ CREATE TABLE `orders` (
   `payment` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'En preparacion',
   `userId` int(255) NOT NULL,
-  `dateCreated` datetime NOT NULL DEFAULT current_timestamp()
+  `dateCreated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE `products` (
   `stock` int(11) NOT NULL,
   `favourite` tinyint(1) NOT NULL DEFAULT 0,
   `price` int(11) NOT NULL,
-  `dateCreated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `dateCreated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -84,7 +84,7 @@ CREATE TABLE `users` (
   `address` varchar(255) NOT NULL,
   `active` tinyint(1) DEFAULT 1,
   `admin` tinyint(1) DEFAULT 0,
-  `dateCreated` datetime NOT NULL DEFAULT current_timestamp()
+  `dateCreated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -93,7 +93,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `fullName`, `email`, `password`, `phone`, `address`, `active`, `admin`, `dateCreated`) VALUES
 (1, 'Ivan Gomez', 'ivangomez1902@gmail.com', '$2b$10$KQWcrY8rL.QW1BIEyhxnvOQErRToJ3fUf50HjzdYYv4MySSjEfvom', 42911222, 'Nother 1169', 1, 1, '2020-07-21 01:55:32');
-
+INSERT INTO `users` (`id`, `fullName`, `email`, `password`, `phone`, `address`, `active`, `admin`, `dateCreated`) VALUES
+(11, 'Carolina Sanchez', 'carolina@test.com', '$2b$10$c/RcdzZhF6n9ILMKT7eua.vUyaqf5i8vBQgDjF8wjpy5Xtx6RZTSK', 45876924, 'Nother 1169', 1, 0, '2020-07-21 01:55:32');
+INSERT INTO `products` (`id`, `name`, `description`, `image`, `stock`, `favourite`, `price`, `dateCreated`) VALUES
+(1, `Hamburguesa`, `Deliciosa hamburguesa completa`, `http://imagen.com`, `10`, `0`, `120`, `2020-07-22 22:39:27`)
+INSERT INTO `products` (`id`, `name`, `description`, `image`, `stock`, `favourite`, `price`, `dateCreated`) VALUES
+(1, `Milanesa napolitana`, `Milanesa de ternera`, `http://imagen.com`, `9`, `0`, `180`, `2020-07-22 22:39:27`)
 --
 -- Índices para tablas volcadas
 --

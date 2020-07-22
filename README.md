@@ -12,5 +12,5 @@ Pasos para iniciar el proyecto:
 1) Crear base de datos local con el nombre 'delilah_resto'.
 2) Importar el archivo SQL 'delilah_resto.sql'
 
-#### Servidor
+### Servidor
 Se puede iniciar el servidor en modo desarrollo con 'npm run dev'
