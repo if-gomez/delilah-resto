@@ -4,7 +4,7 @@ const {db_dialect, db_host, db_password, db_port, db_username, db_database} = re
 
 //const db = new Sequelize(`${db_dialect}://${db_username}@${db_host}:${db_port}/${db_database}`);
 
-const db = new Sequelize(`${db_dialect}://${db_username}@${db_host}/${db_database}`);
+const db = new Sequelize(`${db_dialect}://${db_username}:${db_password}@${db_host}/${db_database}`);
 
 db.authenticate()
   .then(() => console.log('Base de datos conectada'))
